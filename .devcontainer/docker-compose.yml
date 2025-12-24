@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    depends_on:
+      - db
+    networks:
+      - devcontainer-network
+    environment:
+      DATABASE_URL: postgresql://domestic_budget_user:secure_password@db:5432/domestic_budget_db
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: domestic_budget_user
+      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: domestic_budget_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - devcontainer-network
+
+volumes:
+  pgdata:
+
+networks:
+  devcontainer-network:
+    driver: bridge

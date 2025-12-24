@@ -11,7 +11,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=False,
     )
-    time_zone = timezone(timedelta(hours=-3))  # Brazil Standard Time
+    time_zone: timezone = timezone(timedelta(hours=-3))  # Brazil Standard Time
 
     api_title: str = "Domestic Budget API"
     api_version: str = "1.0.0"
@@ -28,7 +28,6 @@ class Settings(BaseSettings):
     @computed_field  # type: ignore[misc]
     @property
     def database_url(self) -> PostgresDsn:
-        """Construct database URL from components."""
         return PostgresDsn.build(
             scheme=f"{self.db_driver}+psycopg",
             username=self.db_user,
@@ -38,7 +37,6 @@ class Settings(BaseSettings):
             path=self.db_name,
         )
 
-    # SQLAlchemy Settings
     sqlalchemy_echo: bool = Field(default=False, description="SQLAlchemy echo mode")
     sqlalchemy_pool_size: int = Field(default=10, description="Database pool size")
     sqlalchemy_max_overflow: int = Field(
@@ -48,5 +46,4 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    """Get cached settings instance."""
     return Settings()

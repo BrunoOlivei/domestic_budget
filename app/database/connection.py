@@ -75,7 +75,6 @@ class DatabaseConnection:
         cls._session_factory = None
 
 
-# Singleton instance
 _database = DatabaseConnection()
 
 

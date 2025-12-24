@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class BankAccountCreate(BaseModel):
-    id: int | None = None
+    account_id: int | None = None
     name: str = Field(..., min_length=1, max_length=100)
     bank_name: str = Field(..., min_length=1, max_length=100)
     account_number: str = Field(..., min_length=1, max_length=20)

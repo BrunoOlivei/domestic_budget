@@ -19,7 +19,7 @@ router = APIRouter(
 def create_bank_account(
     account_data: BankAccountCreate,
     session: Session = Depends(get_db_session),
-) -> BankAccountCreate:
+) -> BankAccount:
     existing_account = (
         session.query(BankAccount)
         .filter(BankAccount.account_number == account_data.account_number)
@@ -32,7 +32,6 @@ def create_bank_account(
             detail="Account number already exists",
         )
 
-    # Create new account
     new_account = BankAccount(
         name=account_data.name,
         account_number=account_data.account_number,
@@ -59,8 +58,8 @@ def list_bank_accounts(session: Session = Depends(get_db_session)):
 def get_bank_account(
     account_id: int,
     session: Session = Depends(get_db_session),
-) -> BankAccount:
-    account = session.query(BankAccount).filter(BankAccount.id == account_id).first()
+):
+    account = session.query(BankAccount).filter(BankAccount.account_id == account_id).first()
 
     if not account:
         raise HTTPException(
@@ -77,8 +76,7 @@ def update_bank_account(
     account_data: BankAccountCreate,
     session: Session = Depends(get_db_session),
 ):
-    """Update a bank account."""
-    account = session.query(BankAccount).filter(BankAccount.id == account_id).first()
+    account = session.query(BankAccount).filter(BankAccount.account_id == account_id).first()
 
     if not account:
         raise HTTPException(
@@ -86,7 +84,6 @@ def update_bank_account(
             detail="Bank account not found",
         )
 
-    # Update fields
     account.name = account_data.name
     account.bank_name = account_data.bank_name
     account.account_type = account_data.account_type
@@ -103,8 +100,7 @@ def delete_bank_account(
     account_id: int,
     session: Session = Depends(get_db_session),
 ):
-    """Delete (deactivate) a bank account."""
-    account = session.query(BankAccount).filter(BankAccount.id == account_id).first()
+    account = session.query(BankAccount).filter(BankAccount.account_id == account_id).first()
 
     if not account:
         raise HTTPException(
@@ -112,6 +108,5 @@ def delete_bank_account(
             detail="Bank account not found",
         )
 
-    # Soft delete
     account.is_active = False
     session.commit()

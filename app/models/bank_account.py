@@ -4,12 +4,15 @@ from sqlalchemy import Boolean, DateTime, Float, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database.base import Base
+from app.core import get_settings
 
+
+settings = get_settings()
 
 class BankAccount(Base):
     __tablename__ = "bank_accounts"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    account_id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     account_number: Mapped[str] = mapped_column(String(20), nullable=False, unique=True)
     bank_name: Mapped[str] = mapped_column(String(100), nullable=False)
@@ -18,10 +21,10 @@ class BankAccount(Base):
     currency: Mapped[str] = mapped_column(String(3), default="BRL", nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, nullable=False
+        DateTime, default=datetime.now(tz=settings.time_zone), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False
+        DateTime, default=datetime.now(tz=settings.time_zone), onupdate=datetime.now(tz=settings.time_zone), nullable=False
     )
 
     def __repr__(self) -> str:
