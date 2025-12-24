@@ -5,7 +5,9 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace:cached
+      - uv-cache:/root/.cache/uv
     command: sleep infinity
+    user: vscode
     depends_on:
       - db
     networks:
@@ -29,6 +31,7 @@ services:
 
 volumes:
   pgdata:
+  uv-cache:
 
 networks:
   devcontainer-network:
