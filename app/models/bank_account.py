@@ -21,10 +21,10 @@ class BankAccount(Base):
     currency: Mapped[str] = mapped_column(String(3), default="BRL", nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.now(tz=settings.time_zone), nullable=False
+        DateTime, default=datetime.now(), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.now(tz=settings.time_zone), onupdate=datetime.now(tz=settings.time_zone), nullable=False
+        DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
 
     def __repr__(self) -> str:
