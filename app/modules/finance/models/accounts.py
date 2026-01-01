@@ -28,4 +28,4 @@ class Accounts(Base):
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
     def __repr__(self) -> str:
-        return f"<BankAccount(id={self.account_id}, name={self.name}, balance={self.balance})>"
+        return f"<BankAccount(id={self.account_id}, name={self.name}, balance={self.balance}), currency={self.currency}>"
