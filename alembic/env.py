@@ -3,8 +3,8 @@ from logging.config import fileConfig
 from sqlalchemy import pool
 
 from alembic import context
-from app.core import get_settings
-from app.database.base import Base
+from app.core.core import get_settings
+from app.core.database.base import Base
 
 config = context.config
 if config.config_file_name is not None:
