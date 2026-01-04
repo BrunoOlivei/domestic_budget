@@ -1,14 +1,12 @@
-from fastapi import Request, status
+from fastapi import Request, status, FastAPI
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.utils.response import StandardResponse
-from app import app
 
 
-@app.exception_handler(RequestValidationError)
 async def validation_exception_handler(
     request: Request,
     exc: RequestValidationError,
@@ -30,7 +28,6 @@ async def validation_exception_handler(
     )
 
 
-@app.exception_handler(StarletteHTTPException)
 async def http_exception_handler(
     request: Request,
     exc: StarletteHTTPException,
@@ -43,7 +40,6 @@ async def http_exception_handler(
     )
 
 
-@app.exception_handler(IntegrityError)
 async def integrity_error_handler(
     request: Request,
     exc: IntegrityError,
@@ -59,7 +55,6 @@ async def integrity_error_handler(
     )
 
 
-@app.exception_handler(SQLAlchemyError)
 async def database_error_handler(
     request: Request,
     exc: SQLAlchemyError
@@ -75,7 +70,6 @@ async def database_error_handler(
     )
 
 
-@app.exception_handler(Exception)
 async def general_exception_handler(
     request: Request,
     exc: Exception
@@ -88,4 +82,22 @@ async def general_exception_handler(
             message="An unexpected error occurred. Please try again later.",
             data=None,
         ).model_dump(),
+    )
+
+
+def configure_exception_handlers(app: FastAPI) -> None:
+    app.add_exception_handler(
+        RequestValidationError, validation_exception_handler  # type: ignore
+    )
+    app.add_exception_handler(
+        StarletteHTTPException, http_exception_handler  # type: ignore
+    )
+    app.add_exception_handler(
+        IntegrityError, integrity_error_handler  # type: ignore
+    )
+    app.add_exception_handler(
+        SQLAlchemyError, database_error_handler  # type: ignore
+    )
+    app.add_exception_handler(
+        Exception, general_exception_handler  # type: ignore
     )
