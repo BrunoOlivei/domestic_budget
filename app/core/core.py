@@ -13,7 +13,7 @@ class Settings(BaseSettings):
 
     api_title: str = "Life OS API"
     api_version: str = "1.0.0"
-    api_description: str = "API para gerenciamento de carreira"
+    api_description: str = "API para gerenciamento de carreira, finanças e produtividade pessoal."
     debug: bool = Field(default=False, description="Debug mode")
 
     db_driver: str = Field(default="postgresql", description="Database driver")
