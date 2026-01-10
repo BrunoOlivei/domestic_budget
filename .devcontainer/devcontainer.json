@@ -41,5 +41,10 @@
   ],
   "postCreateCommand": "uv sync",
   "postAttachCommand": "echo 'Container ready! Run: uvicorn app.main:app --reload --host 0.0.0.0'",
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "portsAttributes": {
+    "5432": {
+      "label": ""
+    }
+  }
 }
