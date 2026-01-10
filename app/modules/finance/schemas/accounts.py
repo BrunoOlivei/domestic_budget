@@ -3,11 +3,13 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, ConfigDict
 
+from app.modules.finance.models.accounts import AccountTypeEnum
+
 
 class AccountBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=100, description="Nome da conta (Ex: NuBank Principal)")
     bank_name: str = Field(..., min_length=1, max_length=100, description="Nome da instituição financeira (Ex: Nubank)")
-    account_type: str = Field(..., min_length=1, max_length=100, description="Tipo da conta (Ex: Conta Corrente, Poupança)")
+    account_type: AccountTypeEnum = Field(..., description="Tipo da conta (Ex: checking, savings, credit, investment, cash)")
 
 
 class AccountCreate(AccountBase):
