@@ -18,7 +18,7 @@ class AccountCreate(AccountBase):
 
 
 class AccountResponse(AccountBase):
-    account_id: int
+    id: int
     account_number: str | None
     agency_number: str | None
     balance: Decimal

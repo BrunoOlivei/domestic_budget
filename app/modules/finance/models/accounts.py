@@ -10,7 +10,7 @@ from app.core.database.base import Base
 class Accounts(Base):
     __tablename__ = "accounts"
 
-    account_id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     bank_name: Mapped[str] = mapped_column(String(100), nullable=False)
     account_type: Mapped[str] = mapped_column(String(50), nullable=False)
