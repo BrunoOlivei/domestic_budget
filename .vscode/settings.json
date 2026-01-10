@@ -20,8 +20,22 @@
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "python.testing.pytestEnabled": true,
     "python.testing.unittestEnabled": false,
-    "editor.rulers": [100],
+    "editor.rulers": [
+        100
+    ],
     "editor.trimAutoWhitespace": true,
     "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "database",
+            "database": "domestic_budget_db",
+            "username": "domestic_budget_user",
+            "connectString": "postgresql://domestic_budget_user:secure_password@db:5432/domestic_budget_db"
+        }
+    ]
 }
