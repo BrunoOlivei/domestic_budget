@@ -1,5 +1,6 @@
 from decimal import Decimal
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -13,21 +14,21 @@ class AccountBase(BaseModel):
 
 
 class AccountCreate(AccountBase):
-    account_number: str | None = Field(default=None, max_length=20, description="Número da conta (Ex: 12345-6)")
-    agency_number: str | None = Field(default=None, max_length=20, description="Número da agência (Ex: 0001)")
+    account_number: Optional[str] = Field(default=None, max_length=20, description="Número da conta (Ex: 12345-6)")
+    agency_number: Optional[str] = Field(default=None, max_length=20, description="Número da agência (Ex: 0001)")
     balance: Decimal = Field(default=Decimal("0.00"), description="Saldo atual da conta")
     currency: str = Field(default="BRL", min_length=3, max_length=3, description="Moeda da conta (Ex: BRL, USD)")
 
 
 class AccountResponse(AccountBase):
     id: int
-    account_number: str | None
-    agency_number: str | None
+    account_number: Optional[str]
+    agency_number: Optional[str]
     balance: Decimal
     currency: str
     is_active: bool
     created_at: datetime
     updated_at: datetime
-    deleted_at: datetime | None
+    deleted_at: Optional[datetime] = None
 
     model_config = ConfigDict(from_attributes=True)
