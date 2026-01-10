@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from sqlalchemy.orm import Session
 
-from app.modules.finance.models.category import Categories
+from app.modules.finance.models.category import Categories, CategoryType
 from app.modules.finance.schemas.category import CategoryCreate
 
 
@@ -35,11 +35,14 @@ class CategoryService:
         Returns:
             Optional[Categories]: The category record if found, else None.
         """
-        return (
+        category = (
             self.db_session.query(Categories)
             .filter(Categories.id == category_id)
             .first()
         )
+        if not category:
+            raise KeyError("Category not found")
+        return category
 
     def get_categories(self) -> List[Categories]:
         """
@@ -69,9 +72,9 @@ class CategoryService:
             category_father = self.get_category_by_id(category_data.parent_id)
             if category_father:
                 if category_father.category_type != category_data.category_type:
-                    category_data.category_type = category_father.category_type
+                    category_data.category_type = CategoryType(category_father.category_type.lower())  # type: ignore
             else:
-                raise ValueError("Parent category not found")
+                raise KeyError("Parent category not found")
 
         new_category = Categories(**category_data.model_dump())
 
