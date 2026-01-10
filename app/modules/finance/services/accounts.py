@@ -1,5 +1,5 @@
-from typing import List, Optional
 from datetime import datetime
+from typing import List, Optional
 
 from sqlalchemy.orm import Session
 
@@ -77,8 +77,19 @@ class AccountService:
         if account_data.account_number:
             existing_account = self.get_account_by_number(account_data.account_number)
 
-            if existing_account:
+            if existing_account and existing_account.is_active:
                 raise ValueError("Account with this account number already exists")
+
+            if existing_account and not existing_account.is_active:
+                existing_account.is_active = True
+                existing_account.deleted_at = None
+                for field, value in account_data.model_dump(exclude_unset=True).items():
+                    setattr(existing_account, field, value)
+
+                self.db_session.commit()
+                self.db_session.refresh(existing_account)
+
+                return existing_account
 
         new_account = Accounts(**account_data.model_dump())
 
@@ -112,19 +123,19 @@ class AccountService:
         return account
 
     def deactivate_account(self, account_id: int) -> Accounts:
-            """
-            Deactivate an account by setting its is_active flag to False and updating the deleted_at timestamp.
+        """
+        Deactivate an account by setting its is_active flag to False and updating the deleted_at timestamp.
 
-            Args:
-                account_id (int): The ID of the account to delete.
-            """
-            account = self.get_account_by_id(account_id)
-            if not account:
-                raise ValueError("Account not found")
+        Args:
+            account_id (int): The ID of the account to delete.
+        """
+        account = self.get_account_by_id(account_id)
+        if not account:
+            raise ValueError("Account not found")
 
-            account.is_active = False
-            account.deleted_at = datetime.now()
-            self.db_session.commit()
-            self.db_session.refresh(account)
+        account.is_active = False
+        account.deleted_at = datetime.now()
+        self.db_session.commit()
+        self.db_session.refresh(account)
 
-            return account
+        return account
