@@ -114,6 +114,11 @@ class AccountService:
         if not account:
             raise ValueError("Account not found")
 
+        if account_data.account_number:
+            account_by_account_number = self.get_account_by_number(account_data.account_number)
+            if account_by_account_number and account_by_account_number.id != account_id:
+                raise ValueError("Another account with this account number already exists")
+
         for field, value in account_data.model_dump(exclude_unset=True).items():
             setattr(account, field, value)
 
