@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 
-from sqlalchemy import Boolean, DateTime, Numeric, String
+from sqlalchemy import Boolean, DateTime, Numeric, String, BigInteger
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database.base import Base
@@ -19,7 +19,7 @@ class AccountTypeEnum(str, Enum):
 class Accounts(Base):
     __tablename__ = "accounts"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     bank_name: Mapped[str] = mapped_column(String(100), nullable=False)
     account_type: Mapped[AccountTypeEnum] = mapped_column(String(20), nullable=False)
