@@ -15,6 +15,10 @@ def seed_categories():
             {"name": "Entreterimento", "category_type": CategoryType.EXPENSE},
             {"name": "Saúde", "category_type": CategoryType.EXPENSE},
             {"name": "Educação", "category_type": CategoryType.EXPENSE},
+            {"name": "Salário", "category_type": CategoryType.INCOME},
+            {"name": "Freelance", "category_type": CategoryType.INCOME},
+            {"name": "Investimentos", "category_type": CategoryType.INCOME},
+            {"name": "Presentes", "category_type": CategoryType.INCOME},
         ]
 
         for category_data in categories_data:
