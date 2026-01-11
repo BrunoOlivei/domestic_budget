@@ -2,8 +2,8 @@ from typing import List, Optional
 
 from sqlalchemy.orm import Session
 
-from app.modules.finance.models.category import Categories, CategoryType
-from app.modules.finance.schemas.category import CategoryCreate
+from app.modules.finance.models.categories import Categories, CategoryType
+from app.modules.finance.schemas.categories import CategoryCreate
 
 
 class CategoryService:

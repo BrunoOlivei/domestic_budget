@@ -2,7 +2,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict
 
-from app.modules.finance.models.category import CategoryType
+from app.modules.finance.models.categories import CategoryType
 
 
 class CategoryBase(BaseModel):

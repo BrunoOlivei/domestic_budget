@@ -1,4 +1,4 @@
-from app.modules.finance.models.category import Categories, CategoryType
+from app.modules.finance.models.categories import Categories, CategoryType
 
 from app.core.database import get_database
 

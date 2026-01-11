@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.core.database import get_db_session
-from app.modules.finance.schemas.category import CategoryCreate, CategoryResponse
-from app.modules.finance.services.category import CategoryService
+from app.modules.finance.schemas.categories import CategoryCreate, CategoryResponse
+from app.modules.finance.services.categories import CategoryService
 
 
 router = APIRouter(
