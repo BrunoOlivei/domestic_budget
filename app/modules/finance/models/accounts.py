@@ -2,8 +2,8 @@ from datetime import datetime
 from decimal import Decimal
 from enum import Enum
 
-from sqlalchemy import Boolean, DateTime, Numeric, String, BigInteger
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import BigInteger, Boolean, DateTime, Numeric, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.core.database.base import Base
 
@@ -37,6 +37,7 @@ class Accounts(Base):
         DateTime, default=datetime.now(), onupdate=datetime.now(), nullable=False
     )
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    accounts = relationship("Accounts", back_populates="transactions")
 
     def __repr__(self) -> str:
         return f"<BankAccount(id={self.account_id}, name={self.name}, balance={self.balance}), currency={self.currency}>"

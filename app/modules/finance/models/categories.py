@@ -30,8 +30,13 @@ class Categories(Base):
     )
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
-    parent = relationship("Categories", remote_side=[id], back_populates="subcategories")
-    subcategories = relationship("Categories", back_populates="parent", cascade="all, delete-orphan")
+    parent = relationship(
+        "Categories", remote_side=[id], back_populates="subcategories"
+    )
+    subcategories = relationship(
+        "Categories", back_populates="parent", cascade="all, delete-orphan"
+    )
+    categories = relationship("Categories", back_populates="transactions")
 
     def __repr__(self) -> str:
         return f"<Category(id={self.id}, name={self.name}, type={self.category_type})>"

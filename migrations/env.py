@@ -7,6 +7,7 @@ from app.core.core import get_settings
 from app.core.database.base import Base
 from app.modules.finance.models.accounts import Accounts  # noqa: F401
 from app.modules.finance.models.categories import Categories  # noqa: F401
+from app.modules.finance.models.transactions import Transactions  # noqa: F401
 
 config = context.config
 if config.config_file_name is not None:
